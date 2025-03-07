@@ -4,3 +4,5 @@ spring:
 client:
   url:
     pokemon: https://pokeapi.co/api/v2/
+server:
+  port: 8080

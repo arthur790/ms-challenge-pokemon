@@ -13,11 +13,11 @@ import java.util.List;
 @Service
 public class PokemonServiceImpl implements PokemonService {
 
-    private final PokemonRestTemplate pokemonRestTemplate;
-    private final FeignPokemonClient feignPokemonClient;
+     final private PokemonRestTemplate pokemonRestTemplate;
+     final private FeignPokemonClient feignPokemonClient;
 
 
-    PokemonServiceImpl(
+    public PokemonServiceImpl(
             PokemonRestTemplate pokemonRestTemplate,
             FeignPokemonClient feignPokemonClient
             ){
@@ -48,7 +48,9 @@ public class PokemonServiceImpl implements PokemonService {
         pokemonDetailEvolutionDto.setTypes(pokemonDto.getTypes());
         pokemonDetailEvolutionDto.setName(pokemonDto.getName());
 
-        getPokemonDetailAndEvolutions(pokemonDto.getSpecies().getUrl());
+        pokemonDetailEvolutionDto.setEvolutionDtoList(
+                getPokemonDetailAndEvolutions(pokemonDto.getSpecies().getUrl())
+        );
 
         return pokemonDetailEvolutionDto;
     }
@@ -72,7 +74,7 @@ public class PokemonServiceImpl implements PokemonService {
 
 
     }
-    private void getPokemonDetailAndEvolutions(String urlSpecies) throws Exception {
+    private List<EvolutionDto> getPokemonDetailAndEvolutions(String urlSpecies) throws Exception {
 
         PokemonSpeciesDto pokemonSpeciesDto = pokemonRestTemplate.getPokemonSpecies(urlSpecies);
 
@@ -80,9 +82,23 @@ public class PokemonServiceImpl implements PokemonService {
         String evolutions = pokemonRestTemplate.getPokemonEvolutionFromSpecies(pokemonSpeciesDto.getEvolutionChangeDto().getUrl());
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(evolutions);
-        
-        List<JsonNode> jsonNodeList = jsonNode.findValues("species");
 
+        List<JsonNode> jsonNodeList = jsonNode.findValues("species");
+        System.out.println(jsonNodeList.toString());
+        return jsonNodeList.stream().map( e -> {
+            EvolutionDto item = new EvolutionDto();
+            item.setName(e.get("name").asText());
+
+            //from name call detail and get id and get sprites.back_default (image)
+
+            return item;
+        }).toList();
+
+
+    }
+    private String getImageFromUrlEvolution(String urlEvolution) throws Exception{
+        //example https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/5.png
+        return null;
     }
 
 
