@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: pokemon
+client:
+  url:
+    pokemon: https://pokeapi.co/api/v2/
