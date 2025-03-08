@@ -90,6 +90,13 @@ public class PokemonServiceImpl implements PokemonService {
             item.setName(e.get("name").asText());
 
             //from name call detail and get id and get sprites.back_default (image)
+            try {
+                PokemonDto pokemonDto = pokemonRestTemplate.getPokemonDetailFromName(item.getName());
+                item.setId( pokemonDto.getId());
+                item.setUrlImage( pokemonDto.getSprites().getFrontDefault());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
 
             return item;
         }).toList();

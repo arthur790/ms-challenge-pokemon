@@ -26,7 +26,7 @@ public class PokemonDto implements Serializable {
 	@JsonProperty(value="held_items")
 	private List<HeldItem> heldItems;
 
-	private BigInteger id;
+	private Integer id;
 	
 	@JsonProperty(value="is_default")
 	private String isDefault;
@@ -48,6 +48,7 @@ public class PokemonDto implements Serializable {
 
 	private List<Types> types;
 
+	private SpriteDto sprites;
 	
 	
 	
