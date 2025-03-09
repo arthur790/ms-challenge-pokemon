@@ -3,9 +3,11 @@ package com.pokemon.service.impl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokemon.client.FeignPokemonClient;
+import com.pokemon.config.CacheConfig;
 import com.pokemon.dto.*;
 import com.pokemon.resttemplate.PokemonRestTemplate;
 import com.pokemon.service.PokemonService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +35,7 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
+    @Cacheable(value = CacheConfig.POKEMON_DATA_CACHE, unless="#result == null")
     public Page<PokemonDetailDto> getPokemonPagination(Integer size, Integer pageNumber) throws Exception {
 
         long limit = 100;
@@ -75,6 +78,11 @@ public class PokemonServiceImpl implements PokemonService {
         return pokemonDetailEvolutionDto;
     }
 
+    /**
+     * Este metodo deberia manejar cache
+     * @param url
+     * @return
+     */
     private PokemonDetailDto getPokemonDetail(String url) {
         try {
             PokemonDetailDto pokemonDetailDto = new PokemonDetailDto();
