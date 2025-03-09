@@ -6,7 +6,13 @@ import com.pokemon.client.FeignPokemonClient;
 import com.pokemon.dto.*;
 import com.pokemon.resttemplate.PokemonRestTemplate;
 import com.pokemon.service.PokemonService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -27,15 +33,29 @@ public class PokemonServiceImpl implements PokemonService {
     }
 
     @Override
-    public List<PokemonDetailDto> getPokemonPagination(long limit, long offset) throws Exception {
+    public Page<PokemonDetailDto> getPokemonPagination(Integer size, Integer pageNumber) throws Exception {
 
-        List<PokemonItemDto> pokemonList = feignPokemonClient.getAllPokemonWithPagination(limit, offset).getBody();
+        long limit = 100;
+        long offset = 0;
+        Pageable pageable = PageRequest.of(pageNumber,  size);
+        final int start = (int) pageable.getOffset();
 
-        assert pokemonList != null;
+        PokemonPaginationDto pokemonPaginationDto = feignPokemonClient.getAllPokemonWithPagination(limit, (int) pageable.getOffset()).getBody();
+
+
+        assert pokemonPaginationDto.getResults() != null;
+
+
+        final int end = Math.min((start + pageable.getPageSize()), pokemonPaginationDto.getResults().size());
+
         List<PokemonDetailDto> pokemonDetailDtoList =
-            pokemonList.stream().map((e) -> getPokemonDetail(e.getUrl())).toList();
+                pokemonPaginationDto.getResults().stream().map((e) -> getPokemonDetail(e.getUrl())).toList();
 
-        return pokemonDetailDtoList;
+
+
+        return new PageImpl<>(pokemonDetailDtoList, pageable, pokemonPaginationDto.getCount());
+
+
     }
 
     @Override
@@ -89,7 +109,7 @@ public class PokemonServiceImpl implements PokemonService {
             EvolutionDto item = new EvolutionDto();
             item.setName(e.get("name").asText());
 
-            //from name call detail and get id and get sprites.back_default (image)
+            //from name call detail and get id and get sprites.front_default (image)
             try {
                 PokemonDto pokemonDto = pokemonRestTemplate.getPokemonDetailFromName(item.getName());
                 item.setId( pokemonDto.getId());
@@ -103,10 +123,7 @@ public class PokemonServiceImpl implements PokemonService {
 
 
     }
-    private String getImageFromUrlEvolution(String urlEvolution) throws Exception{
-        //example https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/5.png
-        return null;
-    }
+
 
 
 }

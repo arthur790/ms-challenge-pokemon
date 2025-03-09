@@ -3,6 +3,7 @@ package com.pokemon.client;
 
 import com.pokemon.dto.PokemonDto;
 import com.pokemon.dto.PokemonItemDto;
+import com.pokemon.dto.PokemonPaginationDto;
 import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface FeignPokemonClient {
 
     @RequestMapping("pokemon")
-    ResponseEntity<List<PokemonItemDto>> getAllPokemonWithPagination(
+    ResponseEntity<PokemonPaginationDto> getAllPokemonWithPagination(
             @RequestParam(value = "limit") long limit, @RequestParam(value = "offset") long offset
     );
 

@@ -7,7 +7,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 @Data
-public class PokemonDetailDto implements Serializable {
+public class PokemonDetailDto  {
     private String name;
     private BigInteger weight;
     private List<Types> types;
