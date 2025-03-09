@@ -12,5 +12,6 @@ public class PokemonDetailDto  {
     private BigInteger weight;
     private List<Types> types;
     private List<Abilities> abilities;
+    private String urlImage;
 
 }

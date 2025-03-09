@@ -4,5 +4,16 @@ spring:
 client:
   url:
     pokemon: https://pokeapi.co/api/v2/
+cache:
+  pokemon-detail:
+    max-size: 700
+    duration: 3
+  pokemon-evolution:
+    max-size: 700
+    duration: 3
+  pokemon-detail-name:
+    max-size: 700
+    duration: 3
+
 server:
   port: 8080
