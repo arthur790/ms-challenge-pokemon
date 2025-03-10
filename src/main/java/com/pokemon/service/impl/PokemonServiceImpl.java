@@ -44,7 +44,6 @@ public class PokemonServiceImpl implements PokemonService {
 
         long limit = 100;
         Pageable pageable = PageRequest.of(pageNumber,  size);
-        final int start = (int) pageable.getOffset();
 
         PokemonPaginationDto pokemonPaginationDto = feignPokemonClient.getAllPokemonWithPagination(
                 limit, (int) pageable.getOffset()).getBody();
@@ -81,6 +80,7 @@ public class PokemonServiceImpl implements PokemonService {
         pokemonDetailEvolutionDto.setWeight(pokemonDto.getWeight());
         pokemonDetailEvolutionDto.setTypes(pokemonDto.getTypes());
         pokemonDetailEvolutionDto.setName(pokemonDto.getName());
+        pokemonDetailEvolutionDto.setUrlImage(pokemonDto.getSprites().getFrontDefault());
 
         pokemonDetailEvolutionDto.setEvolutionDtoList(
                 pokemonApiService.getPokemonDetailAndEvolutions(pokemonDto.getSpecies().getUrl())

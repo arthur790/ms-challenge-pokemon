@@ -3,7 +3,6 @@ package com.pokemon.resttemplate;
 
 import com.pokemon.dto.PokemonDto;
 import com.pokemon.dto.PokemonSpeciesDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
