@@ -1,11 +1,15 @@
 package com.pokemon.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class SpriteDto implements Serializable {
 
     @JsonProperty(value = "back_default")

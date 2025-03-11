@@ -15,7 +15,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.List;
@@ -49,7 +51,11 @@ public class PokemonServiceImpl implements PokemonService {
                 limit, (int) pageable.getOffset()).getBody();
 
 
-        assert pokemonPaginationDto.getResults() != null;
+        if(pokemonPaginationDto.getResults().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Favor de revisar el número de página que desea consultar"
+                    );
+        }
 
 
 

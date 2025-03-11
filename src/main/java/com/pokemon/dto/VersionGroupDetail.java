@@ -5,16 +5,20 @@ import java.io.Serializable;
 import java.math.BigInteger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class VersionGroupDetail implements Serializable {
 	
 	@JsonProperty(value="level_learned_at")
-    protected BigInteger levelLearnedAt;
+    private BigInteger levelLearnedAt;
 	@JsonProperty(value="move_learn_method")
-    protected MoveLearnMethod moveLearnMethod;
+    private MoveLearnMethod moveLearnMethod;
 	@JsonProperty(value="version_group")
-    protected Version versionGroup;
+    private Version versionGroup;
 
 }
