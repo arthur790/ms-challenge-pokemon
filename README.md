@@ -22,7 +22,7 @@ Como usuario, quiero ver el detalle de un pokemon (ya sea clickeando uno del lis
 ## Documentación y uso de endpoints
 
 La documentación del uso de los endpoints la encontrarás en https://documenter.getpostman.com/view/27525327/2sAYk7Rj1E
-
+![img.png](src/main/resources/static/img-doc.png)
 ## Mejoras en rendimiento
 Para mejorar el rendimiento de la API se hace uso de cache con **Caffeine**, considerar para usar de manera distribuida un Redis.
 Para estos fines de reto **Caffeine** cumple con la tarea puesto que podemos trabajar con cache de manera local.
@@ -37,3 +37,8 @@ Se incluyen pruebas unitarias, solo hay que ejecutar:
 con el plugin **jacobo** se genera un reporte en la carpeta target, el porcentaje de cobertura que le aplique fue del 70%:
 
 ![Pruebas unitarias](./src/main/resources/static/pruebas.png)
+
+
+## Despliegue
+Se encuentra desplegada en AZURE, como una app-service con java 21, por medio de github/Actions, por lo tanto cada que se realice un push a la rama **main** en automatico se realizará el deploy
+![img.png](src/main/resources/static/img.png)
