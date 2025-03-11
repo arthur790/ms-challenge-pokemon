@@ -33,3 +33,7 @@ Se incluyen pruebas unitarias, solo hay que ejecutar:
 ```sh
 	mvn clean install
 ```
+
+con el plugin **jacobo** se genera un reporte en la carpeta target, el porcentaje de cobertura que le aplique fue del 70%:
+
+![Pruebas unitarias](./src/main/resources/static/pruebas.png)
