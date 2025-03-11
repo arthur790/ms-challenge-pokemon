@@ -19,3 +19,10 @@ server:
   port: 8080
   error:
     include-message: always
+
+springdoc:
+  swagger-ui:
+    tryItOutEnabled: true
+    operationsSorter: method
+    tagsSorter: alpha
+    swagger-ui.filter: true
